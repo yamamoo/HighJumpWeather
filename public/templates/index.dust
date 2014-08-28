@@ -1,0 +1,29 @@
+{>"layouts/master" /}
+
+{<body}
+    <h1>{@pre type="content" key="greeting"/}</h1>
+    <div class="weathers">
+    	<table border="1">
+    		<thead>
+	    		<tr>
+	    			<th>City</th>
+	    			<th>Weather</th>
+	    			<th>Temperature</th>
+	    		</tr>
+    		</thead>
+    		<tbody>
+    			{#cities}
+    				<tr>
+    					<td>{.name}</td>
+    					<td>{.weather}</td>
+    					<td>{.temperature}</td>
+    				</tr>
+    			{:else}
+    				<tr>
+    					<td colspan=3>There are no weather information available</td>
+    				</td>
+    			{/cities}
+    		</tbody>
+    	</table>
+    </div>
+{/body}
