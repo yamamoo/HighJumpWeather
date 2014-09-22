@@ -20,10 +20,14 @@
     				</tr>
     			{:else}
     				<tr>
-    					<td colspan=3>There are no weather information available</td>
+    					<td colspan=3>Click Refresh button below to get the current weather.</td>
     				</td>
     			{/cities}
     		</tbody>
     	</table>
+    	<form method="GET" action="/weather">
+    		<input type="submit" value="Get Weather">
+    		<input type="hidden" name="_csrf" value="{_csrf}">
+    	</form>
     </div>
 {/body}
