@@ -7,7 +7,18 @@ var CityModel = require('../models/cityModel');
 
 module.exports = function (router) {
 
-    router.get('/', function(req, res) {
+    router.get('/', function (req, res) {
+    	// Print all parameters passed to the server
+    	var parameters = req.query;
+    	console.log('Parameters passed to the server:');
+    	var i = 0;
+    	for (var key in parameters) {
+    		if (parameters.hasOwnProperty(key)) {
+    			console.log('['+i+']', key+'='+parameters[key]);
+    			i++;
+    		}
+    	}
+    	
     	res.redirect('/weather');
     });
 

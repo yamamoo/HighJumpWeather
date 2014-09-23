@@ -1,26 +1,26 @@
 'use strict';
 
 var httpsync = require('httpsync');
+var util = require('util'); // for URL string formatting
 
 var cityModel = function () {
 	var results = {};
 
 	var options = {
-		url: 'http://api.wunderground.com',
+		url: '',
 		method: 'GET',
 		headers: {}
 	};
 
 	var api_key = '1f3fb5df37e5e3d4';
-	var query_substring = '/api/' + api_key + '/conditions/q/';
-	var format = '.json';
+	var url_format = 'http://api.wunderground.com/api/' + api_key + '/conditions/q/%s.json';
 	var DEBUG = 0;  // set this to 0 to use Weather Underground API
 	                // or set this to non-zero to use dummy data
 	
 	var getCityWeather = function(city) {
 		if (DEBUG == 0) {
 
-			options.url += query_substring + city + format;
+			options.url = util.format(url_format, city);
 			//console.log('DEBUG: Calling API', options.url);
 
 			// Call Weather Underground REST API for current condition
@@ -31,8 +31,11 @@ var cityModel = function () {
 			// Convert JSON response string to an object
 			var obj = JSON.parse(res.data);
 
+			//console.log(JSON.stringify(obj));
+
 			if (obj === undefined || obj.current_observation === undefined) {
 				// no valid weather data returned
+				//console.log('No valid data returned for city', city);
 				results[city] = undefined;
 			} else {
 				// Save city's full name, current weather and temperature in a dictionary
@@ -41,6 +44,7 @@ var cityModel = function () {
 					weather: obj.current_observation.weather,
 					temperature: obj.current_observation.temperature_string
 				};
+				//console.log('results = ' + JSON.stringify(results));
 			}
 
 		} else {
